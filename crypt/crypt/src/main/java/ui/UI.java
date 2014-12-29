@@ -24,13 +24,21 @@ public interface UI {
 
     public void modeSelection();
 
+    public void cipherSelection();
+
     public void caesar();
 
     public void caesarInfo();
 
+    public void playfair();
+
+    public void playfairInfo();
+
+    public void generalInfo();
+
     public void enterKey();
 
-    public void enterPlain();
+    public void enterText(boolean encrypt);
 
     public void showCipher(String plain, String cipher, String key);
 

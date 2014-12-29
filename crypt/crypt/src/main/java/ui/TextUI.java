@@ -28,9 +28,17 @@ public class TextUI implements UI {
 
     @Override
     public void modeSelection() {
-        this.print("Kommenot:\n"
-                + "  Caesar-salaus (c)\n"
+        this.print("Valitse toimintamuoto:\n"
+                + "  Salaus (s)\n"
+                + "  Salauksen purku (p)\n"
                 + "  Lopetus (l)\n\n"
+                + "Valitse toiminto: ");
+    }
+
+    @Override
+    public void cipherSelection() {
+        this.print("Valitse salaus:\n"
+                + "  Caesar-salaus (c)\n\n"
                 + "Valitse toiminto: ");
     }
 
@@ -42,9 +50,26 @@ public class TextUI implements UI {
     @Override
     public void caesarInfo() {
         this.print("  Caesar-salauksen avain on luku välillä 0-25"
-                + "  (0 on salaamaton, joten sitä ei suositella käytettäväksi)\n"
-                + "  Caesar-salaus kelpuuttaa vain pieniä kirjaimia ilman ääkkösiä,\n"
-                + "  ei mitään muuta, ei edes välilyöntejä.\n");
+                + "  (0 on salaamaton, joten sitä ei suositella käytettäväksi)\n");
+    }
+
+    @Override
+    public void playfair() {
+        this.print("Playfair-salaus:\n");
+    }
+
+    @Override
+    public void playfairInfo() {
+        this.print("  Playfair-salauksen avain on aakkoset sisältävä 5*5 taulukko.\n");
+        this.print("  Sillä taulukko voi sisältää vain 25 kirjainta playfair tulkitsee j:n i:ksi.\n");
+        this.print("  Playfair-salaus salaa kirjainpareja,\n");
+        this.print("  joten tekstin loppuun lisätään satunnainen kirjain, mikäli sen pituus on pariton\n");
+    }
+
+    @Override
+    public void generalInfo() {
+        this.print("  Salaukset salaavat vain pieniä kirjaimia ilman ääkkösiä.\n"
+                + "  Muut merkit päätyvät salattuun viestiin muuttumattomina.\n");
     }
 
     @Override
@@ -53,8 +78,20 @@ public class TextUI implements UI {
     }
 
     @Override
-    public void enterPlain() {
+    public void enterText(boolean encrypt) {
+        if (encrypt) {
+            this.enterPlain();
+        } else {
+            this.enterCipher();
+        }
+    }
+
+    private void enterPlain() {
         this.print("Syötä salattava teksti: ");
+    }
+
+    private void enterCipher() {
+        this.print("Syötä purettava teksti: ");
     }
 
     @Override

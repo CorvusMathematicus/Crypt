@@ -38,12 +38,17 @@ public class ProgramLoop {
 
     public void mainLoop() {
         while (true) {
+            boolean mode;
             ui.modeSelection();
             input = io.readLine();
             if (input.equals("l")) {
                 break;
-            } else if (input.equals("c")) {
-                caesar();
+            } else if (input.equals("s")) {
+                mode = true;
+                cipherSelect(mode);
+            } else if (input.equals("p")) {
+                mode = false;
+                cipherSelect(mode);
             } else {
                 ui.inputError();
             }
@@ -51,11 +56,26 @@ public class ProgramLoop {
         ui.finish();
     }
 
-    private void caesar() {
+    private void cipherSelect(boolean mode) {
+        while (true) {
+            ui.cipherSelection();
+            input = io.readLine();
+            if (input.equals("c")) {
+                caesar(mode);
+                break;
+            } else {
+                ui.inputError();
+            }
+        }
+    }
+
+    private void caesar(boolean mode) {
+        //TODO: Siisti.
         boolean validInput = false;
         while (true) {
             ui.caesar();
             ui.caesarInfo();
+            ui.generalInfo();
             ui.enterKey();
             input = io.readLine();
             if (input.matches("([01]?[0-9])|(2[0-5])")) {
@@ -66,15 +86,23 @@ public class ProgramLoop {
         }
         Integer key = Integer.parseInt(input);
         ui.caesar();
-        ui.enterPlain();
+        ui.enterText(mode);
         String plain = io.readLine();
-        char c[] = caesar.encrypt(plain.toCharArray(), key);
+        char c[];
+        if (mode) {
+            c = caesar.encrypt(plain.toCharArray(), key);
+        } else {
+            c = caesar.encrypt(plain.toCharArray(), -key);
+        }
         String cipher = new String();
         for (int i = 0; i < c.length; i++) {
-            cipher+=c[i];
-            System.out.println(c[i]);
+            cipher += c[i];
         }
         ui.caesar();
-        ui.showCipher(plain, cipher, key.toString());
+        if (mode) {
+            ui.showCipher(plain, cipher, key.toString());
+        } else {
+            ui.showCipher(cipher, plain, key.toString());
+        }
     }
 }
