@@ -21,19 +21,37 @@ import java.util.Scanner;
 /**
  *
  * @author Kalle J. Ouwehand
+ *
+ * Luokka toteuttaa käyttäjän syötteen lukemisen
  */
 public class IO {
 
     final private Scanner input;
 
+    /**
+     *
+     * @param input Syötettä lukeva skanneri
+     */
     public IO(Scanner input) {
         this.input = input;
     }
 
+    /**
+     *
+     * Metodi lukee yhden rivin
+     *
+     * @return Luettu rivi
+     */
     public String readLine() {
         return input.nextLine();
     }
 
+    /**
+     *
+     * Metodi lukee yhden kokonaisluvun
+     *
+     * @return Luettu luku
+     */
     public int readInt() {
         return input.nextInt();
     }

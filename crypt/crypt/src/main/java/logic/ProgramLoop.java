@@ -22,6 +22,9 @@ import ui.*;
 /**
  *
  * @author Kalle J. Ouwehand
+ *
+ * Luokka toimii ohjelman runkona Luokka luo ohjelman tarvitsemat oliot ja
+ * kutsuu niiden tarvitsemia metodeja
  */
 public class ProgramLoop {
 
@@ -30,12 +33,19 @@ public class ProgramLoop {
     final private Caesar caesar;
     private String input;
 
+    /**
+     * @param io Käyttäjän syötettä lukeva luokka
+     * @param ui Käyttöliittymä
+     */
     public ProgramLoop(IO io, UI ui) {
         this.io = io;
         this.ui = ui;
         caesar = new Caesar();
     }
 
+    /**
+     * Ohjelman eri vaiheiden suoritus tapahtuu tässä silmukassa
+     */
     public void mainLoop() {
         while (true) {
             boolean mode;

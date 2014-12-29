@@ -19,6 +19,12 @@ package ui;
 /**
  *
  * @author Kalle J. Ouwehand
+ *
+ * Luokka sisältää toistaiseksi käytössä olevan tekstikäyttöliittymän Metodit
+ * tulostavat tietyn tekstin
+ *
+ * Metodien kuvaukset:
+ * @see ui.UI
  */
 public class TextUI implements UI {
 

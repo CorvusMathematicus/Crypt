@@ -21,11 +21,17 @@ import java.io.File;
 /**
  *
  * @author Kalle J. Ouwehand
+ *
+ * Luokan on tarkoitus lukea tiedostoista ja kirjoittaa niihin. Luokan
+ * toiminnallisuuksia ei ole vielä toteutettu, luokka ei tee mitään.
  */
 public class FileIO {
 
     final private File f;
 
+    /**
+     * @param f
+     */
     public FileIO(File f) {
         this.f = f;
     }

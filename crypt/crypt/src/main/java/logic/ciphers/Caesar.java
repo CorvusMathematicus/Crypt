@@ -21,9 +21,19 @@ import misc.AlphabetArray;
 /**
  *
  * @author Kalle J. Ouwehand
+ *
+ * Luokka toteuttaa Caesar-salauksen
  */
 public class Caesar implements AlphabetArray {
 
+    /**
+     *
+     * Metodi toteuttaa salauksen
+     *
+     * @param plain Salaamaton viesti
+     * @param key Salausavain (luku välillä 0-25)
+     * @return cipher Salattu viesti
+     */
     public char[] encrypt(char plain[], int key) {
         char cipher[] = plain;
         for (int i = 0; i < cipher.length; i++) {
@@ -37,6 +47,14 @@ public class Caesar implements AlphabetArray {
         return cipher;
     }
 
+    /**
+     *
+     * Metodi toteuttaa salauksen purkamisen
+     *
+     * @param cipher Salattu viesti
+     * @param key Salausavain
+     * @return plain Salaamaton viesti
+     */
     public char[] decrypt(char cipher[], int key) {
         return encrypt(cipher, -key);    //Caesar-salaus puretaan vähentämällä avain lisäämisen sijaan.
     }
