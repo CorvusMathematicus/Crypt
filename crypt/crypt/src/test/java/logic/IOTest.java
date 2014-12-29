@@ -17,24 +17,36 @@
 package logic;
 
 import java.util.Scanner;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import ui.TextUI;
+import org.junit.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author korppi
  */
-public class ProgramLoopTest {
+public class IOTest {
 
-    private ProgramLoop pL;
     private String input;
+    private IO io;
 
     @Before
     public void setUp() {
-        pL = new ProgramLoop(new IO(new Scanner(input)), new TextUI());
     }
 
-    //TODO: Toteuta testejä ja keksi mitä tässä testataan järkevästi, puolet luokasta on kutstuja käyttöliittymälle tai syötteenluvulle.
+    @Test
+    public void testInputString() {
+        input = "Koe\n";
+        io = new IO(new Scanner(input));
+        String result = io.readLine();
+        assertEquals(result, "Koe");
+    }
+
+    @Test
+    public void testInputInt() {
+        input = "36\n";
+        io = new IO(new Scanner(input));
+        int result = io.readInt();
+        assertTrue(result == 36);
+    }
 }

@@ -16,10 +16,7 @@
  */
 package logic.ciphers;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -29,50 +26,50 @@ import static org.junit.Assert.*;
  */
 public class CaesarTest {
 
-    public CaesarTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private Caesar c = new Caesar();
+    private char[] plain;
+    private int key;
+    private char[] result;
 
     @Before
     public void setUp() {
-        char[] plain = {'a', 'b', 'c'};
-    }
-
-    @After
-    public void tearDown() {
+        c = new Caesar();
+        plain = new char[]{'a', 'b', 'c'};
+        key = 25;
     }
 
     @Test
     public void testEncryptNoKey() {
-        char[] plain = {'a', 'b', 'c'};
-        int key = 0;
-        Caesar c = new Caesar();
-        char[] result = c.encrypt(plain, key);
+        key = 0;
+        result = c.encrypt(plain, key);
         assertArrayEquals(result, plain);
     }
 
     @Test
     public void testEncryptMaxKey() {
-        char[] plain = {'a', 'a', 'a'};
-        int key = 25;
-        Caesar c = new Caesar();
-        char[] result = c.encrypt(plain, key);
+        plain = new char[]{'a', 'a', 'a'};
+        result = c.encrypt(plain, key);
         assertArrayEquals(result, new char[]{'z', 'z', 'z'});
     }
 
     @Test
     public void testEncryptLoop() {
-        char[] plain = {'a', 'b', 'c'};
-        int key = 25;
-        Caesar c = new Caesar();
-        char[] result = c.encrypt(plain, key);
+        result = c.encrypt(plain, key);
         assertArrayEquals(result, new char[]{'z', 'a', 'b'});
+    }
+
+    @Test
+    //Tämä on mitä purkaminen itse asiassa tekee
+    public void testEncryptNegativeKey() {
+        key = -1;
+        result = c.encrypt(plain, key);
+        assertArrayEquals(result, new char[]{'z', 'a', 'b'});
+    }
+
+    @Test
+    public void testDecrypt() {
+        plain = new char[]{'z', 'a', 'b'};
+        result = c.decrypt(plain, key);
+        assertArrayEquals(result, new char[]{'a', 'b', 'c'});
     }
 }

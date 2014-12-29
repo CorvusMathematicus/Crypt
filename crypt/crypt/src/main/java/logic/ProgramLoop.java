@@ -25,6 +25,9 @@ import ui.*;
  *
  * Luokka toimii ohjelman runkona Luokka luo ohjelman tarvitsemat oliot ja
  * kutsuu niiden tarvitsemia metodeja
+ * 
+ * Luokka sisältää tällä hetkellä paljon käyttöliitymäelementtien ja syötteenlukua kutsuvia osia
+ * TODO: Luo uusi vuorovaikutusluokka ja siirrä käyttöliittymää ja syötteenlukua käyttävät osat sinne
  */
 public class ProgramLoop {
 
