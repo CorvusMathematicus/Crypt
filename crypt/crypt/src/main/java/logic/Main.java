@@ -16,7 +16,9 @@
  */
 package logic;
 
+import java.awt.EventQueue;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 import ui.*;
 
 /**
@@ -26,6 +28,10 @@ import ui.*;
 public class Main {
 
     public static void main(String args[]) {
+
+        //Graafinen käyttöliittymä itsessään toimii, mutta salauksia ei ole vielä liitetty siihen.
+        SwingUtilities.invokeLater(new GUI());
+
         Scanner s = new Scanner(System.in);
         IO io = new IO(s);
         UI ui = new TextUI();

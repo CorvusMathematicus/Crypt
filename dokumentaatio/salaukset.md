@@ -1,0 +1,50 @@
+Salaukset:
+Huomaa: Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
+
+Caesar:
+Caesar-salauksessa teksti salataan korvaamalla jokainen aakkosten kirjain kirjaimella, joka on avainluvun verran edempänä aakkosissa, aloittaen alusta aakkosten loppuessa.
+Salaus on varsin heikko ja helppo murtaa, tiheysanalyysillä tai yksinkertaisesti kokeilemalla avaimia, joita on aakkosia vastaava määrä (26, kun ääkkösiä ei käytetä).
+
+Caesar salauksen avaimena toimii luku.
+
+Esimerkki:
+Avain:	3
+Salaamaton teksti:	SALATTAVATEKSTI
+Salattu teksti:		VDODWWDZDWHNVWL
+
+
+Vignere:
+Vignere-salaus koostuu useista limittäisistä Caesar-salauksista, 
+
+
+Playfair:
+Playfair-salauksessa salataan kirjainpareja.
+
+Playfair-salauksen avain on 5x5-ruudun taulukko, joka sisältää aakkoset.
+J-kirjain tulkitaan I:ksi, jotta aakkosten pituudeksi saadaan 25 merkkiä.
+
+Esimerkki:
+Avain:	T A M O N
+	K E V I S
+	Y B C D F
+	G H J L Q
+	R U W X Z
+Salaamaton viesti:	SALATTAVATEKSTI
+Salattu viesti:		NEHONGAMMEAKEKOK
+
+OTP:
+OTP-salauksessa (One-Time Pad), merkit muutetaan ensin niitä vastaaviksi luvuiksi ja tämän jälkeen niihin lisätään avaimen vastaavassa kohdassa esiintyvä luku.
+Tulos muutetaan jälleen merkiksi. Jos luku ylittää käytettävän merkistön pituuden aloitetaan alusta.
+Salaus puretaan vähentämällä kutakin merkkiä vastaavasta luvusta avaimen vastaavan kohdan luku ja muuttamalla tulos merkiksi. Jos luku alittaa nollan, palataan merkistön loppuun.
+Salaus on oikein toteutettuna erittäin vahva ja periaatteessa mahdoton murtaa, sillä oikeaa tulosta ei voi erottaa väärästä tuntematta viestin sisältöä etukäteen.
+Salausta on kuitenkin hankala hyödyntää käytännössä, sillä avaimet ovat pitkiä, niiden on oltava aidosti satunnaisia, eikä niitä voi käyttää kuin kerran vaarantamatta salausta.
+
+OTP-salauksen avain on lukujono, jonka pituus on vähintään yhtä suuri kuin käytettävän merkistön.
+
+Esimerkki:
+Avain:					23 12 9  7  26 2  14 15 21 1  9  15 4  26 2
+Salaamaton teksti:			S  A  L  A  T  T  A  V  A  T  E  K  S  T  I
+Salaamatonta tekstiä vastaavat luvut:	19 1  12 1  20 20 1  22 1  20 5  11 19 20 9
+Salattua tekstiä vastaavat luvut:	42 13 21 8  46 22 15 37 22 21 14 26 23 46 11
+					16 13 21 8  20 22 15 11 22 21 14 26 23 20 11
+Salattu teksti:				P  M  U  H  T  V  O  K  V  U  N  Z  W  T  K

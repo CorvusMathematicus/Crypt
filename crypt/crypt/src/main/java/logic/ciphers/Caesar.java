@@ -37,9 +37,9 @@ public class Caesar implements AlphabetArray {
     public char[] encrypt(char plain[], int key) {
         char cipher[] = plain;
         for (int i = 0; i < cipher.length; i++) {
-            for (int j = 0; j < alphabet.length; j++) {
-                if (cipher[i] == alphabet[j]) {
-                    cipher[i] = alphabet[caesarShift(j, key)];
+            for (int j = 0; j < ALPHABET.length; j++) {
+                if (cipher[i] == ALPHABET[j]) {
+                    cipher[i] = ALPHABET[caesarShift(j, key)];
                     break;
                 }
             }
@@ -62,11 +62,11 @@ public class Caesar implements AlphabetArray {
     //Palauttaa käsitellyn merkin
     private int caesarShift(int value, int key) {
         int i = value + key;
-        while (i >= alphabet.length) {
-            i -= alphabet.length;
+        while (i >= ALPHABET.length) {
+            i -= ALPHABET.length;
         }
         while (i < 0) {
-            i += alphabet.length;
+            i += ALPHABET.length;
         }
         return i;
     }

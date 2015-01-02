@@ -45,8 +45,10 @@
                 <version>0.30</version>
                 <configuration>
                     <targetClasses>
+                        <param>logic.ciphers.*</param>
                     </targetClasses>
                     <targetTests>
+                        <param>logic.ciphers.*</param>
                     </targetTests>
                 </configuration>
             </plugin>

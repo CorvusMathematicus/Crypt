@@ -16,7 +16,7 @@
  */
 package logic.ciphers;
 
-import static misc.AlphabetArray.alphabet;
+import static misc.AlphabetArray.ALPHABET;
 
 /**
  *
@@ -119,8 +119,8 @@ public class Playfair {
     }
 
     private boolean cipherable(char c) {
-        for (int i = 0; i < alphabet.length; i++) {
-            if (c == alphabet[i]) {
+        for (int i = 0; i < ALPHABET.length; i++) {
+            if (c == ALPHABET[i]) {
                 return true;
             }
         }
