@@ -16,58 +16,78 @@
  */
 package logic.ciphers;
 
-import misc.AlphabetArray;
-
 /**
  *
  * @author Kalle J. Ouwehand
  *
  * Luokka toteuttaa Caesar-salauksen
+ * @see logic.ciphers.Cipher
  */
-public class Caesar implements AlphabetArray {
+public class Caesar extends Cipher {
 
-    /**
-     *
-     * Metodi toteuttaa salauksen
-     *
-     * @param plain Salaamaton viesti
-     * @param key Salausavain (luku välillä 0-25)
-     * @return cipher Salattu viesti
-     */
-    public char[] encrypt(char plain[], int key) {
-        char cipher[] = plain;
-        for (int i = 0; i < cipher.length; i++) {
-            for (int j = 0; j < ALPHABET.length; j++) {
-                if (cipher[i] == ALPHABET[j]) {
-                    cipher[i] = ALPHABET[caesarShift(j, key)];
-                    break;
+    private int keyInt;
+
+    public Caesar() {
+        keyInt = 0;
+        key = new char[]{'0'};
+    }
+
+    @Override
+    public char encrypt(char plain) {
+        char cipher = plain;
+        for (int i = 0; i < alphabet.length; i++) {
+            if (cipher == alphabet[i]) {
+                int value = i + keyInt;
+                while (value >= alphabet.length) {
+                    value -= alphabet.length;
                 }
+                while (value < 0) {
+                    value += alphabet.length;
+                }
+                cipher = alphabet[value];
+                break;
             }
         }
         return cipher;
     }
 
-    /**
-     *
-     * Metodi toteuttaa salauksen purkamisen
-     *
-     * @param cipher Salattu viesti
-     * @param key Salausavain
-     * @return plain Salaamaton viesti
-     */
-    public char[] decrypt(char cipher[], int key) {
-        return encrypt(cipher, -key);    //Caesar-salaus puretaan vähentämällä avain lisäämisen sijaan.
+    @Override
+    public char decrypt(char cipher) {
+        char plain = cipher;
+        for (int i = 0; i < alphabet.length; i++) {
+            if (cipher == alphabet[i]) {
+                int value = i - keyInt;
+                while (value >= alphabet.length) {
+                    value -= alphabet.length;
+                }
+                while (value < 0) {
+                    value += alphabet.length;
+                }
+                plain = alphabet[value];
+                break;
+            }
+        }
+        return plain;
     }
 
-    //Palauttaa käsitellyn merkin
-    private int caesarShift(int value, int key) {
-        int i = value + key;
-        while (i >= ALPHABET.length) {
-            i -= ALPHABET.length;
+    @Override
+    public boolean setKey(char c[]) {
+        int i;
+        try {
+            i = Integer.parseInt(new String(c));
+        } catch (Exception e) {
+            return false;
         }
-        while (i < 0) {
-            i += ALPHABET.length;
+        if (i >= 0 && i < 26) {
+            keyInt = i;
+            key = c;
+            return true;
         }
-        return i;
+        return false;
+    }
+    
+    @Override
+    public char[] getKey(){
+        return key;
     }
 }

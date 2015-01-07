@@ -19,8 +19,10 @@ package ui;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import javax.swing.*;
 import static javax.swing.WindowConstants.*;
 import logic.Logic;
@@ -38,10 +40,21 @@ public class GUI implements Runnable, ActionListener {
     private JTextField plaintext;
     private JTextField ciphertext;
     private JTextField keytext;
-    Logic logic;
+    final private KeyListener kl;
+    final private Logic logic;
+    private static Font font;
+
+    String plain;
+    String cipher;
+    String key;
 
     public GUI() {
-        logic=new Logic();
+        logic = new Logic(this);
+        kl = new KeyInput(logic);
+        plain = new String();
+        cipher = new String();
+        key = new String();
+        font = new Font("Courier New", Font.PLAIN, 16);
     }
 
     @Override
@@ -56,18 +69,78 @@ public class GUI implements Runnable, ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Tapahtumasta riippuen säädetään salaustilaa, salausmenetelmää tai
+     * avainta.
+     *
+     * @param a Metodin laukaissut tapahtuma
+     */
     @Override
     public void actionPerformed(ActionEvent a) {
         String action = a.getActionCommand();
         if (action.equals("encrypt")) {
             logic.setEncryptMode(true);
+            plaintext.setEnabled(true);
+            ciphertext.setEnabled(false);
         } else if (action.equals("decrypt")) {
-           logic.setEncryptMode(false);
+            logic.setEncryptMode(false);
+            plaintext.setEnabled(false);
+            ciphertext.setEnabled(true);
         } else if (action.equals("caesar")) {
             logic.setCipher(0);
+        } else if (action.equals("setKey")) {
+            logic.setKey();
+            plaintext.setEnabled(false);
+            ciphertext.setEnabled(false);
+            keytext.setEnabled(true);
         }
+    }
+
+    /**
+     * Kutsutaan kun avain on asetettu ja halutaan palata normaalitilaan.
+     */
+    public void keySet() {
         plaintext.setEnabled(logic.getEncryptMode());
         ciphertext.setEnabled(!logic.getEncryptMode());
+        keytext.setEnabled(false);
+    }
+
+    /**
+     * Palauttaa ruudun
+     *
+     * @return frame luokan luoma ja käyttämä ruutu
+     */
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    /**
+     * Kirjoittaa salaamattoman tekstin näkyviin.
+     *
+     * @param s Salaamaton merkki
+     */
+    public void writePlain(String s) {
+        plaintext.setText("");
+        plaintext.setText(s);
+    }
+
+    /**
+     * Kirjoittaa salaamattoman tekstin näkyviin.
+     *
+     * @param s Salaamaton merkki
+     */
+    public void writeCipher(String s) {
+        ciphertext.setText("");
+        ciphertext.setText(s);
+    }
+
+    /**
+     * Kirjoittaa salaamattoman tekstin näkyviin.
+     *
+     * @param s Salaamaton merkki
+     */
+    public void writeKey(String s) {
+        keytext.setText(s);
     }
 
     private void createComponents(Container container) {
@@ -89,10 +162,6 @@ public class GUI implements Runnable, ActionListener {
         container.setLayout(layout);
     }
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
     private void initSettingsPanel(JPanel panel) {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -112,10 +181,15 @@ public class GUI implements Runnable, ActionListener {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        plaintext = new JTextField("The plaintext comes here");
+        plaintext = new JFormattedTextField("The plaintext comes here");
+        plaintext.addKeyListener(kl);
+        plaintext.setFont(font);
         plaintext.setEnabled(true);
+        logic.setEncryptMode(true);
         panel.add(plaintext);
-        ciphertext = new JTextField("The ciphertext comes here");
+        ciphertext = new JFormattedTextField("The ciphertext comes here");
+        ciphertext.addKeyListener(kl);
+        ciphertext.setFont(font);
         ciphertext.setEnabled(false);
         panel.add(ciphertext);
         panel.add(Box.createGlue());
@@ -128,7 +202,14 @@ public class GUI implements Runnable, ActionListener {
         JLabel headLine = new JLabel("Key:");
         panel.add(headLine);
         keytext = new JTextField("The key comes here");
+        keytext.setEnabled(false);
+        keytext.setFont(font);
+        keytext.addKeyListener(kl);
+        JButton setKeyButton = new JButton("Set key");
+        setKeyButton.setActionCommand("setKey");
+        setKeyButton.addActionListener(this);
         panel.add(keytext);
+        panel.add(setKeyButton);
         panel.add(Box.createGlue());
     }
 

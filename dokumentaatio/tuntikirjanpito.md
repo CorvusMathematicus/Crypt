@@ -11,3 +11,4 @@ Päivämäärä:	Käytetty aika (noin):	Tehty:
 02.01.2015	0,5h			Luotu abstrakti luokka kaikille salauksille.
 02.01.2015	1h			Luotu kuvaukset Caesar- ja OTP-salauksille, sekä aloitettu Playfair- ja Vignere-salausten kuvaamista.
 02.01.2015	4h			Paranneltu käyttöliittymää, aloitettu uusi logiikkametodi, tehty sekvenssikaaviot.
+07.01.2015	5h			Otettu graafinen käyttöliittymä käyttöön. Paranneltu graafista käyttöliittymää. Varmistettu ohjelman perustoiminnallisuus. Päivitetty Caesar-salaus perimään Cipher-luokan.

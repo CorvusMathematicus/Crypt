@@ -24,8 +24,8 @@ package logic.ciphers;
  */
 abstract public class Cipher {
 
-    private char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-    private char[] key;
+    protected char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    protected char[] key;
 
     /**
      *
@@ -34,7 +34,7 @@ abstract public class Cipher {
      * @param plain     Salaamaton viesti
      * @return cipher   Salattu viesti
      */
-    abstract public char[] encrypt(char plain);
+    abstract public char encrypt(char plain);
 
     /**
      *
@@ -43,7 +43,7 @@ abstract public class Cipher {
      * @param cipher    Salattu viesti
      * @return plain    Salaamaton viesti
      */
-    abstract public char[] decrypt(char cipher);
+    abstract public char decrypt(char cipher);
 
     /**
      *

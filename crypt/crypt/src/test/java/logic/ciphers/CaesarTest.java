@@ -27,49 +27,62 @@ import static org.junit.Assert.*;
 public class CaesarTest {
 
     private Caesar c = new Caesar();
-    private char[] plain;
+    private char plain;
     private int key;
-    private char[] result;
+    private char result;
 
     @Before
     public void setUp() {
         c = new Caesar();
-        plain = new char[]{'a', 'b', 'c'};
-        key = 25;
+        plain = 'a';
+        c.setKey("25".toCharArray());
+    }
+
+    @Test
+    public void testGetKey() {
+        assertArrayEquals(c.getKey(), "25".toCharArray());
+    }
+
+    @Test
+    public void testSetKey() {
+        c.setKey("0".toCharArray());
+        assertArrayEquals(c.getKey(), "0".toCharArray());
+    }
+
+    @Test
+    public void testInvalidKey1() {
+        c.setKey("q".toCharArray());
+        assertArrayEquals(c.getKey(), "25".toCharArray());
+    }
+    @Test
+    public void testInvalidKey2() {
+        c.setKey("26".toCharArray());
+        assertArrayEquals(c.getKey(), "25".toCharArray());
     }
 
     @Test
     public void testEncryptNoKey() {
-        key = 0;
-        result = c.encrypt(plain, key);
-        assertArrayEquals(result, plain);
+        c.setKey("0".toCharArray());
+        result = c.encrypt(plain);
+        assertEquals(result, plain);
     }
 
     @Test
     public void testEncryptMaxKey() {
-        plain = new char[]{'a', 'a', 'a'};
-        result = c.encrypt(plain, key);
-        assertArrayEquals(result, new char[]{'z', 'z', 'z'});
+        result = c.encrypt(plain);
+        assertEquals(result, 'z');
     }
 
     @Test
     public void testEncryptLoop() {
-        result = c.encrypt(plain, key);
-        assertArrayEquals(result, new char[]{'z', 'a', 'b'});
+        plain = 'b';
+        result = c.encrypt(plain);
+        assertEquals(result, 'a');
     }
 
     @Test
-    //Tämä on mitä purkaminen itse asiassa tekee
-    public void testEncryptNegativeKey() {
-        key = -1;
-        result = c.encrypt(plain, key);
-        assertArrayEquals(result, new char[]{'z', 'a', 'b'});
-    }
-
-    @Test
-    public void testDecrypt() {
-        plain = new char[]{'z', 'a', 'b'};
-        result = c.decrypt(plain, key);
-        assertArrayEquals(result, new char[]{'a', 'b', 'c'});
+    public void testDecryptLoop() {
+        result = c.decrypt(plain);
+        assertEquals(result, 'b');
     }
 }
