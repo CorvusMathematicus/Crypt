@@ -1,4 +1,4 @@
 Crypt
 =====
 
-The goal is to create a program that can encrypt and decrypt text (the algorithms are rather simple and should not be considered safe for use with any kind of sensitive data).
+This is a program that can encrypt and decrypt text using Caesar- and Vignere-ciphers (the algorithms are rather simple and should not be considered safe for use with any kind of sensitive data).

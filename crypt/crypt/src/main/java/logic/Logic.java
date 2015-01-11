@@ -35,12 +35,14 @@ public class Logic {
     String plaintext;
     String ciphertext;
     String keytext;
+    final private Caesar c;
 
     public Logic(GUI gui) {
         //Alustus
         this.gui = gui;
         this.activeCipher = 0;
-        this.cipher = new Cipher[]{new Caesar()};
+        this.c = new Caesar();
+        this.cipher = new Cipher[]{c, new Vignere(c)};
         this.plaintext = "";
         this.ciphertext = "";
         this.keytext = "";
@@ -72,6 +74,8 @@ public class Logic {
      */
     public void setCipher(int cipherNumber) {
         activeCipher = cipherNumber;
+        keytext = new String(cipher[activeCipher].getKey());
+        gui.writeKey(keytext);
     }
 
     /**
@@ -100,10 +104,19 @@ public class Logic {
      */
     public void setKey() {
         keyBeingSet = true;
+        keytext = "";
+        gui.writeKey(keytext);
     }
 
+    /**
+     * Metodi käsittelee syötetyn merkin ohjelman tilan vaatimalla tavalla.
+     *
+     * @param c
+     */
     public void input(char c) {
         if (keyBeingSet) {
+            plaintext = "";
+            ciphertext = "";
             if (c != '\n') {
                 keytext += c;
             } else {
@@ -112,20 +125,22 @@ public class Logic {
                 }
                 keyBeingSet = false;
                 gui.keySet();
+                gui.writeKey(keytext);
             }
+        } else if (encryptMode) {
+            plaintext += c;
+            ciphertext += encrypt(c);
+            gui.writeCipher(ciphertext);
+        } else {
+            plaintext += decrypt(c);
+            ciphertext += c;
+            gui.writePlain(plaintext);
         }
         if (c == '\n') {
             plaintext = "";
             ciphertext = "";
-        } else if (encryptMode) {
-            plaintext += c;
-            ciphertext += encrypt(c);
-        } else {
-            plaintext += decrypt(c);
-            ciphertext += c;
+            gui.writePlain(plaintext);
+            gui.writeCipher(ciphertext);
         }
-        gui.writePlain(plaintext);
-        gui.writeCipher(ciphertext);
-        gui.writeKey(keytext);
     }
 }

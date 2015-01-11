@@ -31,7 +31,7 @@ public class KeyInput implements KeyListener {
     final private Logic l;
 
     /**
-     * 
+     *
      * @param l käytettävä ohjelmalogiikka
      */
     public KeyInput(Logic l) {

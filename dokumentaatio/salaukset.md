@@ -1,11 +1,19 @@
 Salaukset:
-Huomaa: Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
+Huomaa:
+Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
+Nämä salaukset eivät yleensä sovellu tiedon salaamiseen vakavassa mielessä.
+Ohjelma sisältää Caesar- ja Vignere-salaukset.
+
+Kirjaimia vastaavat numerot:
+A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
+1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+
 
 Caesar:
 Caesar-salauksessa teksti salataan korvaamalla jokainen aakkosten kirjain kirjaimella, joka on avainluvun verran edempänä aakkosissa, aloittaen alusta aakkosten loppuessa.
 Salaus on varsin heikko ja helppo murtaa, tiheysanalyysillä tai yksinkertaisesti kokeilemalla avaimia, joita on aakkosia vastaava määrä (26, kun ääkkösiä ei käytetä).
 
-Caesar salauksen avaimena toimii luku.
+Caesar-salauksen avaimena toimii luku.
 
 Esimerkki:
 Avain:	3
@@ -14,14 +22,32 @@ Salattu teksti:		VDODWWDZDWHNVWL
 
 
 Vignere:
-Vignere-salaus koostuu useista limittäisistä Caesar-salauksista, 
+Vignere-salaus koostuu useista limittäisistä Caesar-salauksista. Jokainen avainsanan kirjaimista muutetaan luvuksi, joka toimii Caesar-salauksen avaimena. Kun kaikki avaimet on käytetty aloitetaan alusta.
+
+Vignere-salauksen avaimena toimii avainsana.
+
+Esimerkki:
+Avain:			AVAIN
+Salaamaton teksti:	SALATTAVAVIESTI
+Avain:			AVAINAVAINAVAIN
+Salattu teksti:		TWMJHUWWJJJATCW
 
 
 Playfair:
-Playfair-salauksessa salataan kirjainpareja.
+Playfair-salauksessa salataan kirjainpareja. Jos viestin pituus on pariton, lisätään loppuun Q. Jos kirjainpari koostuisi kahdesta samasta merkistä, lisätään niiden väliin Q.
 
 Playfair-salauksen avain on 5x5-ruudun taulukko, joka sisältää aakkoset.
 J-kirjain tulkitaan I:ksi, jotta aakkosten pituudeksi saadaan 25 merkkiä.
+
+Säännöt avaimen käyttöön:
+Jos salattavat kirjaimet ovat samoja, tai kirjaimia on vain yksi:
+	Lisätään ensimmäisen kirjaimen perään Q (jälkimmäinen samoista kirjaimista siirtyy seuraavaan pariin).
+Jos salattavat kirjaimet ovat samalla vaakarivillä:
+	Salattu kirjain on kummankin kirjaimen oikealla puolella sijaitseva kirjain palaten tarvittaessa rivin alkuun.
+Jos salattavat kirjaimet ovat samalla pystyrivillä:
+	Salattu kirjain on kummankin kirjaimen alla sijaitseva kirjain palaten tarvittaessa rivin alkuun.
+Jos kirjaimet ovat eri vaaka- ja pystyriveissä:
+	Muodostetaan suorakaide, jonka kulmissa salattavat kirjaimet ovat. Salattu kirjain on saman rivin vastakkaisessa kulmassa sijaitseva kirjain.
 
 Esimerkki:
 Avain:	T A M O N
@@ -31,6 +57,7 @@ Avain:	T A M O N
 	R U W X Z
 Salaamaton viesti:	SALATTAVATEKSTI
 Salattu viesti:		NEHONGAMMEAKEKOK
+
 
 OTP:
 OTP-salauksessa (One-Time Pad), merkit muutetaan ensin niitä vastaaviksi luvuiksi ja tämän jälkeen niihin lisätään avaimen vastaavassa kohdassa esiintyvä luku.

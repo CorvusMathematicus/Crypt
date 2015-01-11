@@ -54,7 +54,7 @@ public class GUI implements Runnable, ActionListener {
         plain = new String();
         cipher = new String();
         key = new String();
-        font = new Font("Courier New", Font.PLAIN, 16);
+        font = new Font("monospaced", Font.PLAIN, 16);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class GUI implements Runnable, ActionListener {
     }
 
     /**
-     * Tapahtumasta riippuen säädetään salaustilaa, salausmenetelmää tai
-     * avainta.
+     * Reagoidaan käyttöliitymän napin painallukseen. Tapahtumasta (painetusta
+     * napista) riippuen säädetään salaustilaa, salausmenetelmää tai avainta.
      *
      * @param a Metodin laukaissut tapahtuma
      */
@@ -88,6 +88,8 @@ public class GUI implements Runnable, ActionListener {
             ciphertext.setEnabled(true);
         } else if (action.equals("caesar")) {
             logic.setCipher(0);
+        } else if (action.equals("vignere")) {
+            logic.setCipher(1);
         } else if (action.equals("setKey")) {
             logic.setKey();
             plaintext.setEnabled(false);
@@ -117,25 +119,23 @@ public class GUI implements Runnable, ActionListener {
     /**
      * Kirjoittaa salaamattoman tekstin näkyviin.
      *
-     * @param s Salaamaton merkki
+     * @param s Salaamaton teksti
      */
     public void writePlain(String s) {
-        plaintext.setText("");
         plaintext.setText(s);
     }
 
     /**
-     * Kirjoittaa salaamattoman tekstin näkyviin.
+     * Kirjoittaa salatun tekstin näkyviin.
      *
-     * @param s Salaamaton merkki
+     * @param s Salattu teksti
      */
     public void writeCipher(String s) {
-        ciphertext.setText("");
         ciphertext.setText(s);
     }
 
     /**
-     * Kirjoittaa salaamattoman tekstin näkyviin.
+     * Kirjoittaa avaimen näkyviin.
      *
      * @param s Salaamaton merkki
      */
@@ -181,13 +181,17 @@ public class GUI implements Runnable, ActionListener {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        plaintext = new JFormattedTextField("The plaintext comes here");
+        JLabel plain = new JLabel("Plaintext:");
+        panel.add(plain);
+        plaintext = new JFormattedTextField();
         plaintext.addKeyListener(kl);
         plaintext.setFont(font);
         plaintext.setEnabled(true);
         logic.setEncryptMode(true);
         panel.add(plaintext);
-        ciphertext = new JFormattedTextField("The ciphertext comes here");
+        JLabel cipher = new JLabel("Ciphertext:");
+        panel.add(cipher);
+        ciphertext = new JFormattedTextField();
         ciphertext.addKeyListener(kl);
         ciphertext.setFont(font);
         ciphertext.setEnabled(false);
@@ -201,7 +205,7 @@ public class GUI implements Runnable, ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel headLine = new JLabel("Key:");
         panel.add(headLine);
-        keytext = new JTextField("The key comes here");
+        keytext = new JTextField();
         keytext.setEnabled(false);
         keytext.setFont(font);
         keytext.addKeyListener(kl);
@@ -244,11 +248,15 @@ public class GUI implements Runnable, ActionListener {
         panel.add(headline);
         JRadioButton caesarButton = new JRadioButton("Caesar");
         caesarButton.setSelected(true);
+        caesarButton.addActionListener(this);
+        caesarButton.setActionCommand("caesar");
         panel.add(caesarButton);
         cipherButtons.add(caesarButton);
-        //JRadioButton vignereButton = new JRadioButton("Vignere");
-        //cipherMode.add(vignereButton);
-        //cipherButtons.add(vignereButton);
+        JRadioButton vignereButton = new JRadioButton("Vignere");
+        vignereButton.addActionListener(this);
+        vignereButton.setActionCommand("vignere");
+        panel.add(vignereButton);
+        cipherButtons.add(vignereButton);
         //JRadioButton playfairButton = new JRadioButton("Playfair");
         //cipherMode.add(playfairButton);
         //cipherButtons.add(playfairButton);

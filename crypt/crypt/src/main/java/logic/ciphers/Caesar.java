@@ -34,40 +34,12 @@ public class Caesar extends Cipher {
 
     @Override
     public char encrypt(char plain) {
-        char cipher = plain;
-        for (int i = 0; i < alphabet.length; i++) {
-            if (cipher == alphabet[i]) {
-                int value = i + keyInt;
-                while (value >= alphabet.length) {
-                    value -= alphabet.length;
-                }
-                while (value < 0) {
-                    value += alphabet.length;
-                }
-                cipher = alphabet[value];
-                break;
-            }
-        }
-        return cipher;
+        return caesarShift(plain, keyInt);
     }
 
     @Override
     public char decrypt(char cipher) {
-        char plain = cipher;
-        for (int i = 0; i < alphabet.length; i++) {
-            if (cipher == alphabet[i]) {
-                int value = i - keyInt;
-                while (value >= alphabet.length) {
-                    value -= alphabet.length;
-                }
-                while (value < 0) {
-                    value += alphabet.length;
-                }
-                plain = alphabet[value];
-                break;
-            }
-        }
-        return plain;
+        return caesarShift(cipher, -keyInt);
     }
 
     @Override
@@ -85,9 +57,36 @@ public class Caesar extends Cipher {
         }
         return false;
     }
-    
+
     @Override
-    public char[] getKey(){
+    public char[] getKey() {
         return key;
+    }
+
+    /**
+     * Metodi suorittaa caesar-salauksen annetulle merkille annetulla avaimella.
+     * Metodi on julkinen, sillä myös Vignere-salaus käyttää sitä.
+     * Huomaa: Caesar- ja Vignere-salausten purkaminen toteutetaan kutsumalla metodia avaimen vastaluvulla (-key).
+     *
+     * @param c         Salattava merkki
+     * @param k         Avainluku
+     * @return cipher   Salattu merkki
+     */
+    public char caesarShift(char c, int k) {
+        char result = c;
+        for (int i = 0; i < alphabet.length; i++) {
+            if (result == alphabet[i]) {
+                int value = i + k;
+                while (value >= alphabet.length) {
+                    value -= alphabet.length;
+                }
+                while (value < 0) {
+                    value += alphabet.length;
+                }
+                result = alphabet[value];
+                break;
+            }
+        }
+        return result;
     }
 }

@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
  */
 public class CaesarTest {
 
-    private Caesar c = new Caesar();
+    private Caesar c;
     private char plain;
     private int key;
     private char result;
@@ -35,6 +35,7 @@ public class CaesarTest {
     public void setUp() {
         c = new Caesar();
         plain = 'a';
+        key = 25;
         c.setKey("25".toCharArray());
     }
 
@@ -54,6 +55,7 @@ public class CaesarTest {
         c.setKey("q".toCharArray());
         assertArrayEquals(c.getKey(), "25".toCharArray());
     }
+
     @Test
     public void testInvalidKey2() {
         c.setKey("26".toCharArray());
@@ -84,5 +86,17 @@ public class CaesarTest {
     public void testDecryptLoop() {
         result = c.decrypt(plain);
         assertEquals(result, 'b');
+    }
+
+    @Test
+    public void caesarShiftLoop() {
+        result = c.caesarShift('z', 1);
+        assertEquals(result, 'a');
+    }
+
+    @Test
+    public void caesarShiftNegativeKeyLoop() {
+        result = c.caesarShift('a', -1);
+        assertEquals(result, 'z');
     }
 }
