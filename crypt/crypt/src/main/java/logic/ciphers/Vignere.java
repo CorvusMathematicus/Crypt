@@ -27,7 +27,7 @@ public class Vignere extends Cipher {
 
     private int[] keyInts;
     private int keyPos;
-    private Caesar caesar;
+    final private Caesar caesar;
 
     public Vignere(Caesar c) {
         keyInts = new int[]{0};

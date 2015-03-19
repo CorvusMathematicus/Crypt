@@ -88,7 +88,7 @@ public class GUI implements Runnable, ActionListener {
             ciphertext.setEnabled(true);
         } else if (action.equals("caesar")) {
             logic.setCipher(0);
-        } else if (action.equals("vignere")) {
+        } else if (action.equals("vigenere")) {
             logic.setCipher(1);
         } else if (action.equals("setKey")) {
             logic.setKey();
@@ -252,11 +252,11 @@ public class GUI implements Runnable, ActionListener {
         caesarButton.setActionCommand("caesar");
         panel.add(caesarButton);
         cipherButtons.add(caesarButton);
-        JRadioButton vignereButton = new JRadioButton("Vignere");
-        vignereButton.addActionListener(this);
-        vignereButton.setActionCommand("vignere");
-        panel.add(vignereButton);
-        cipherButtons.add(vignereButton);
+        JRadioButton vigenereButton = new JRadioButton("Vignère");
+        vigenereButton.addActionListener(this);
+        vigenereButton.setActionCommand("vigenere");
+        panel.add(vigenereButton);
+        cipherButtons.add(vigenereButton);
         //JRadioButton playfairButton = new JRadioButton("Playfair");
         //cipherMode.add(playfairButton);
         //cipherButtons.add(playfairButton);

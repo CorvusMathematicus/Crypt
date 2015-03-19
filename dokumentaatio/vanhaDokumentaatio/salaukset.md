@@ -3,7 +3,6 @@ Huomaa:
 Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
 Nämä salaukset eivät yleensä sovellu tiedon salaamiseen vakavassa mielessä.
 Ohjelma sisältää Caesar- ja Vignere-salaukset.
-Ohjelmaan on tarkoitus lisätä Atbash-, Autokey- ja OTP-salaukset.
 
 Kirjaimia vastaavat numerot:
 A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
@@ -34,18 +33,6 @@ Aakkosten vastaavuudet latinalaisessa aakkostossa:
 
 Salaamaton teksti:	SALATTAVATEKSTI
 Salattu teksti:		HZOZGGZEZGVPHGR
-
-
-Autokey:
-Autokey- eli itseavainsalauksessa salattava viesti itse toimii avaimena yhdessä avainsanan kanssa. Salaus tapahtuu laskemalla yhteen salattavan viestin ja avaimen vastaavien merkkien lukuarvot. Laskun tulos muutetaan taas merkiksi. Purku vastaavasti tapahtuu vähentämällä salatun viestin merkin vastaavan avainmerkin lukuarvo. Jos luku on suurempi kuin 26 vähennetään siitä 26 ja jos luku on pienempi kuin nolla, lisätään siihen 26 merkin lukuarvon saamiseksi. Salaus ei ole erityisen vahva, sillä jos on mahdollista arvata edes osa viestin sisällöstä, voidaan sillä paljastaa lisää viestin sisällöstä käyttämällä sitä avaimena ja viestin toimiessa avaimena jokainen viestistä paljastuva merkki paljastaa lisää merkkejä viestistä.
-
-Autokey-salauksen avaimena toimii avainsana ja salattava viesti itse.
-
-Esimerkki:
-Avainsana:		AVAIN
-Salaamaton teksti:	SALATTAVATEKSTI
-Avain:			AVAINSALATTAVAT
-Salattu teksti:		TWMJHMBHBNYLHUM
 
 
 Vigenère:
