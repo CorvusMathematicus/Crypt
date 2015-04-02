@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 korppi
+ * Copyright (C) 2015 korppi
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,12 +33,12 @@ public class Caesar extends Cipher {
     }
 
     @Override
-    public char encrypt(char plain) {
+    protected char encrypt(char plain) {
         return caesarShift(plain, keyInt);
     }
 
     @Override
-    public char decrypt(char cipher) {
+    protected char decrypt(char cipher) {
         return caesarShift(cipher, -keyInt);
     }
 
@@ -65,28 +65,18 @@ public class Caesar extends Cipher {
 
     /**
      * Metodi suorittaa caesar-salauksen annetulle merkille annetulla avaimella.
-     * Metodi on julkinen, sillä myös Vignere-salaus käyttää sitä.
-     * Huomaa: Caesar- ja Vignere-salausten purkaminen toteutetaan kutsumalla metodia avaimen vastaluvulla (-key).
+     * Metodi on julkinen, sillä myös Vigènere-salaus käyttää sitä. Huomaa:
+     * Caesar- ja Vigènere-salausten purkaminen toteutetaan kutsumalla metodia
+     * avaimen vastaluvulla (-key).
      *
-     * @param c         Salattava merkki
-     * @param k         Avainluku
-     * @return cipher   Salattu merkki
+     * @param c Salattava merkki
+     * @param k Avainluku
+     * @return cipher Salattu merkki
      */
     public char caesarShift(char c, int k) {
-        char result = c;
-        for (int i = 0; i < alphabet.length; i++) {
-            if (result == alphabet[i]) {
-                int value = i + k;
-                while (value >= alphabet.length) {
-                    value -= alphabet.length;
-                }
-                while (value < 0) {
-                    value += alphabet.length;
-                }
-                result = alphabet[value];
-                break;
-            }
-        }
+        int i = this.charToInt(c);
+        i += k;
+        char result = this.intToChar(i);
         return result;
     }
 }

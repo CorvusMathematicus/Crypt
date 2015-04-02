@@ -18,9 +18,10 @@ package logic.ciphers;
 
 /**
  *
- * @author korppi
- * 
- * Luokka toimii pohjana salauksille.
+ * @author Kalle J. Ouwehand
+ *
+ * Luokka toimii pohjana salauksille. Salausten toiminta kuvataan tarkemmin
+ * dokumentaatiokansion tiedostossa salaukset.md
  */
 abstract public class Cipher {
 
@@ -28,29 +29,65 @@ abstract public class Cipher {
     protected char[] key;
 
     /**
+     * Metodilla tarkistetaan merkin salattavuus. Jos merkki kuuluu
+     * latinalaisiin aakkosiin, se ohjataan encrypt-metodille. Jos merkki ei
+     * kuulu latinalaisiin aakkosiin, se palautetaan sellaisenaan. Huomaa:
+     * Rivinvaihto ohjataan encrypt-metodille, jotta salaus osaa palautua
+     * alkutilaan.
      *
+     * @param plain
+     * @return
+     */
+    public char preEncrypt(char plain) {
+        if (this.charToInt(plain) != -1 || plain == '\n') {
+            return encrypt(plain);
+        } else {
+            return plain;
+        }
+    }
+
+    /**
+     * Metodilla tarkistetaan merkin purettavuus. Jos merkki kuuluu
+     * latinalaisiin aakkosiin, se ohjataan decrypt-metodille. Jos merkki ei
+     * kuulu latinalaisiin aakkosiin, se palautetaan sellaisenaan. Huomaa:
+     * Rivinvaihto ohjataan decrypt-metodille, jotta salaus osaa palautua
+     * alkutilaan.
+     *
+     * @param plain
+     * @return
+     */
+    public char preDecrypt(char plain) {
+        if (this.charToInt(plain) != -1 || plain == '\n') {
+            return decrypt(plain);
+        } else {
+            return plain;
+        }
+    }
+
+    /**
      * Metodilla salataan yksi merkki
      *
-     * @param plain     Salaamaton viesti
-     * @return cipher   Salattu viesti
+     * @param plain Salaamaton viesti
+     * @return cipher Salattu viesti
      */
-    abstract public char encrypt(char plain);
+    abstract protected char encrypt(char plain);
 
     /**
      *
      * Metodilla puretaan yksi salattu merkki
      *
-     * @param cipher    Salattu viesti
-     * @return plain    Salaamaton viesti
+     * @param cipher Salattu viesti
+     * @return plain Salaamaton viesti
      */
-    abstract public char decrypt(char cipher);
+    abstract protected char decrypt(char cipher);
 
     /**
      *
      * Metodilla asetetaan salaukselle avain
      *
-     * @param key       Asetettava avain
-     * @return success  Palauttaa toden, jos avaimen asettaminen onnistui, muuten palautetaan epätosi
+     * @param key Asetettava avain
+     * @return success Palauttaa toden, jos avaimen asettaminen onnistui, muuten
+     * palautetaan epätosi
      */
     abstract public boolean setKey(char key[]);
 
@@ -58,7 +95,46 @@ abstract public class Cipher {
      *
      * Metodi palauttaa avaimen
      *
-     * @return key  Avain
+     * @return key Avain
      */
     abstract public char[] getKey();
+
+    /**
+     *
+     * Metodi muuttaa merkin luvuksi salausalgoritmeja varten. Luku on merkin
+     * järjestysluku siten, että a=0. Huomaa: Jos merkki ei ole latinalaisten
+     * aakkosten kirjain, palautetaan -1.
+     *
+     * @param c Merkki
+     * @return i Merkkiä vastaava luku, -1 jos merkki ei ole latinalaisten
+     * aakkosten kirjain.
+     */
+    public int charToInt(char c) {
+        for (int i = 0; i < alphabet.length; i++) {
+            if (c == alphabet[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Metodi palauttaa lukua vastaavan latinalaisten aakkosten merkin. Huomaa:
+     * Metodi palauttaa aina merkin, sillä metodi käyttää jakojäännöstä. Tämä on
+     * tarkoituksellista, sillä useissa tilanteissa salaus voi tuottaa liian
+     * ison tai liian pienen merkin. Tämä metodi korjaa ongelman
+     * automaattisesti.
+     *
+     * @param i Merkiksi muutettava luku
+     * @return c Lukua vastaava merkki
+     */
+    public char intToChar(int i) {
+        while (i >= 26) {
+            i -= 26;
+        }
+        while (i < 0) {
+            i += 26;
+        }
+        return alphabet[i];
+    }
 }

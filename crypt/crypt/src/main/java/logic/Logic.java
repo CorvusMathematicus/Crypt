@@ -21,7 +21,7 @@ import ui.GUI;
 
 /**
  *
- * @author korppi
+ * @author Kalle J. Ouwehand
  *
  * Luokka sisältää varsinaisen ohjelmalogiikan.
  */
@@ -40,9 +40,9 @@ public class Logic {
     public Logic(GUI gui) {
         //Alustus
         this.gui = gui;
-        this.activeCipher = 0;
+        this.activeCipher = 1;
         this.c = new Caesar();
-        this.cipher = new Cipher[]{c, new Vignere(c)};
+        this.cipher = new Cipher[]{new Atbash(), c, new Vignere(c), new Autokey(c)};
         this.plaintext = "";
         this.ciphertext = "";
         this.keytext = "";
@@ -75,27 +75,36 @@ public class Logic {
     public void setCipher(int cipherNumber) {
         activeCipher = cipherNumber;
         keytext = new String(cipher[activeCipher].getKey());
+        if (cipherNumber == 0) {
+            gui.disableKey();
+        } else {
+            gui.enableKey();
+        }
         gui.writeKey(keytext);
     }
 
     /**
-     * Metodi kutsuu käytössä olevan salauksen encrypt-metodia
+     * Metodi kutsuu käytössä olevan salauksen preEncrypt-metodia.
+     *
+     * @see logic.ciphers.Cipher
      *
      * @param c Salattava merkki
      * @return cipher Salattu merkki
      */
     public char encrypt(char c) {
-        return cipher[activeCipher].encrypt(c);
+        return cipher[activeCipher].preEncrypt(c);
     }
 
     /**
-     * Metodi kutsuu käytössä olevan salauksen decrypt-metodia
+     * Metodi kutsuu käytössä olevan salauksen preDecrypt-metodia.
+     *
+     * @see logic.ciphers.Cipher
      *
      * @param c Salattu merkki
      * @return plain Purettu merkki
      */
     public char decrypt(char c) {
-        return cipher[activeCipher].decrypt(c);
+        return cipher[activeCipher].preDecrypt(c);
     }
 
     /**

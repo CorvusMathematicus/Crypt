@@ -40,6 +40,7 @@ public class GUI implements Runnable, ActionListener {
     private JTextField plaintext;
     private JTextField ciphertext;
     private JTextField keytext;
+    private JButton setKeyButton = new JButton("Set key");
     final private KeyListener kl;
     final private Logic logic;
     private static Font font;
@@ -86,10 +87,14 @@ public class GUI implements Runnable, ActionListener {
             logic.setEncryptMode(false);
             plaintext.setEnabled(false);
             ciphertext.setEnabled(true);
-        } else if (action.equals("caesar")) {
+        } else if (action.equals("atbash")) {
             logic.setCipher(0);
-        } else if (action.equals("vigenere")) {
+        } else if (action.equals("caesar")) {
             logic.setCipher(1);
+        } else if (action.equals("vigenere")) {
+            logic.setCipher(2);
+        } else if (action.equals("autokey")) {
+            logic.setCipher(3);
         } else if (action.equals("setKey")) {
             logic.setKey();
             plaintext.setEnabled(false);
@@ -141,6 +146,22 @@ public class GUI implements Runnable, ActionListener {
      */
     public void writeKey(String s) {
         keytext.setText(s);
+    }
+    
+    /**
+     * Metodi sallii avaimen asettamisen.
+     * Tätä kutsutaan, kun salaus ei ole atbash.
+     */
+    public void enableKey(){
+        setKeyButton.setEnabled(true);
+    }
+    
+    /**
+     * Metodi estää avaimen asettamisen.
+     * Tätä kutsutaan käytettäessä salausta, jossa ei ole avainta (atbash).
+     */
+    public void disableKey(){
+        setKeyButton.setEnabled(false);
     }
 
     private void createComponents(Container container) {
@@ -209,7 +230,6 @@ public class GUI implements Runnable, ActionListener {
         keytext.setEnabled(false);
         keytext.setFont(font);
         keytext.addKeyListener(kl);
-        JButton setKeyButton = new JButton("Set key");
         setKeyButton.setActionCommand("setKey");
         setKeyButton.addActionListener(this);
         panel.add(keytext);
@@ -246,22 +266,26 @@ public class GUI implements Runnable, ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel headline = new JLabel("Cipher:");
         panel.add(headline);
+        JRadioButton atbashButton = new JRadioButton("Atbash");
+        atbashButton.addActionListener(this);
+        atbashButton.setActionCommand("atbash");
+        panel.add(atbashButton);
+        cipherButtons.add(atbashButton);
         JRadioButton caesarButton = new JRadioButton("Caesar");
         caesarButton.setSelected(true);
         caesarButton.addActionListener(this);
         caesarButton.setActionCommand("caesar");
         panel.add(caesarButton);
         cipherButtons.add(caesarButton);
-        JRadioButton vigenereButton = new JRadioButton("Vignère");
+        JRadioButton vigenereButton = new JRadioButton("Vigènere");
         vigenereButton.addActionListener(this);
         vigenereButton.setActionCommand("vigenere");
         panel.add(vigenereButton);
         cipherButtons.add(vigenereButton);
-        //JRadioButton playfairButton = new JRadioButton("Playfair");
-        //cipherMode.add(playfairButton);
-        //cipherButtons.add(playfairButton);
-        //JRadioButton otpButton = new JRadioButton("One time pad");
-        //cipherMode.add(otpButton);
-        //cipherButtons.add(otpButton);
+        JRadioButton autokeyButton = new JRadioButton("Autokey");
+        autokeyButton.addActionListener(this);
+        autokeyButton.setActionCommand("autokey");
+        panel.add(autokeyButton);
+        cipherButtons.add(autokeyButton);
     }
 }

@@ -89,4 +89,12 @@ public class VignereTest {
         }
         assertArrayEquals(result, plain);
     }
+
+    @Test
+    public void testKeyResetOnNewline() {
+        char c = v.encrypt('a');
+        v.encrypt('\n');
+        c = v.encrypt('a');
+        assertEquals(c, 'b');
+    }
 }
