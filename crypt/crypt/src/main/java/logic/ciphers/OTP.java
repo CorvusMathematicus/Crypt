@@ -20,16 +20,16 @@ package logic.ciphers;
  *
  * @author Kalle J. Ouwehand
  *
- * Luokka toteuttaa Autokey-salauksen
+ * Luokka toteuttaa OTP-salauksen (One-time pad)
  * @see logic.ciphers.Cipher
  */
-public class Autokey extends Cipher {
+public class OTP extends Cipher {
 
     private int[] keyInts;
     private int keyPos;
     final private Caesar caesar;
 
-    public Autokey(Caesar c) {
+    public OTP(Caesar c) {
         keyInts = new int[]{0};
         key = new char[]{' '};
         caesar = c;
@@ -38,22 +38,28 @@ public class Autokey extends Cipher {
     @Override
     protected char encrypt(char plain) {
         if (plain == '\n') {
-            setKey(key);    //Näin saadaan käyttöön alkuperäisen avaimen luvut, eikä jonkin viestin kohdan luvut.
+            keyPos = 0;
             return ' ';
         }
-        char result = caesar.caesarShift(plain, keyInts[0]);
-        keyInts = updateKeyInts(keyInts, plain);
+        char result = caesar.caesarShift(plain, keyInts[keyPos]);
+        keyPos++;
+        if (keyPos >= keyInts.length) {
+            return ' ';
+        }
         return result;
     }
 
     @Override
     protected char decrypt(char cipher) {
         if (cipher == '\n') {
-            this.setKey(key);    //Näin saadaan käyttöön alkuperäisen avaimen luvut, eikä jonkin viestin kohdan luvut.
+            keyPos = 0;
             return ' ';
         }
-        char result = caesar.caesarShift(cipher, -keyInts[0]);
-        keyInts = updateKeyInts(keyInts, result);
+        char result = caesar.caesarShift(cipher, -keyInts[keyPos]);
+        keyPos++;
+        if (keyPos >= keyInts.length) {
+            return ' ';
+        }
         return result;
     }
 
@@ -71,19 +77,12 @@ public class Autokey extends Cipher {
         }
         key = c;
         keyInts = newKeyInts;
+        keyPos = 0;
         return true;
     }
 
     @Override
     public char[] getKey() {
         return key;
-    }
-
-    private int[] updateKeyInts(int kI[], char lastInput) {
-        for (int i = 0; i < kI.length - 1; i++) {
-            kI[i] = kI[i + 1];
-        }
-        kI[kI.length - 1] = this.charToInt(lastInput) + 1;
-        return kI;
     }
 }

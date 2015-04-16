@@ -287,5 +287,10 @@ public class GUI implements Runnable, ActionListener {
         autokeyButton.setActionCommand("autokey");
         panel.add(autokeyButton);
         cipherButtons.add(autokeyButton);
+        JRadioButton otpButton = new JRadioButton("One-time pad");
+        otpButton.addActionListener(this);
+        otpButton.setActionCommand("OTP");
+        panel.add(otpButton);
+        cipherButtons.add(otpButton);
     }
 }

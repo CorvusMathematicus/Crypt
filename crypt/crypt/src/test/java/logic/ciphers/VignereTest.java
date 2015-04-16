@@ -22,7 +22,7 @@ import org.junit.Test;
 
 /**
  *
- * @author korppi
+ * @author Kalle J. Ouwehand
  */
 public class VignereTest {
 

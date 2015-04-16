@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author korppi
+ * @author Kalle J. Ouwehand
  */
 public class CaesarTest {
 

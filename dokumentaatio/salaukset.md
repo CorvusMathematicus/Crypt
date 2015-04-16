@@ -3,7 +3,6 @@ Huomaa:
 Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
 Nämä salaukset eivät yleensä sovellu tiedon salaamiseen vakavassa mielessä.
 Ohjelma sisältää Caesar- ja Vignere-salaukset.
-Ohjelmaan on tarkoitus lisätä Atbash-, Autokey- ja OTP-salaukset.
 
 Kirjaimia vastaavat numerot:
 A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z

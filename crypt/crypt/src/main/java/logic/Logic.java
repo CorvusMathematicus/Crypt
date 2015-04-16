@@ -42,7 +42,7 @@ public class Logic {
         this.gui = gui;
         this.activeCipher = 1;
         this.c = new Caesar();
-        this.cipher = new Cipher[]{new Atbash(), c, new Vignere(c), new Autokey(c)};
+        this.cipher = new Cipher[]{new Atbash(), c, new Vignere(c), new Autokey(c), new OTP(c)};
         this.plaintext = "";
         this.ciphertext = "";
         this.keytext = "";
@@ -55,6 +55,15 @@ public class Logic {
      */
     public void setEncryptMode(boolean mode) {
         encryptMode = mode;
+        /*if (this.activeCipher == 4) {
+            if (this.encryptMode == true) {
+                gui.disableKey();
+            } else {
+                gui.enableKey();
+            }
+        } else if (this.activeCipher != 0) {
+            gui.enableKey();
+        }*/
     }
 
     /**
@@ -75,7 +84,7 @@ public class Logic {
     public void setCipher(int cipherNumber) {
         activeCipher = cipherNumber;
         keytext = new String(cipher[activeCipher].getKey());
-        if (cipherNumber == 0) {
+        if (cipherNumber == 0 /*|| (cipherNumber == 4 && this.encryptMode == true)*/) {
             gui.disableKey();
         } else {
             gui.enableKey();

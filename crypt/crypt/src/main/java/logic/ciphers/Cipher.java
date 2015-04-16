@@ -65,7 +65,8 @@ abstract public class Cipher {
     }
 
     /**
-     * Metodilla salataan yksi merkki
+     * Metodilla salataan yksi merkki. Metodia ei tule kutsua suoraan, vaan sen
+     * sijaan kutsutaan preEncrypt-metodia.
      *
      * @param plain Salaamaton viesti
      * @return cipher Salattu viesti
@@ -74,7 +75,8 @@ abstract public class Cipher {
 
     /**
      *
-     * Metodilla puretaan yksi salattu merkki
+     * Metodilla puretaan yksi salattu merkki. Metodia ei tule kutsua suoraan, vaan sen
+     * sijaan kutsutaan preDecrypt-metodia.
      *
      * @param cipher Salattu viesti
      * @return plain Salaamaton viesti
@@ -109,7 +111,7 @@ abstract public class Cipher {
      * @return i Merkkiä vastaava luku, -1 jos merkki ei ole latinalaisten
      * aakkosten kirjain.
      */
-    public int charToInt(char c) {
+    protected int charToInt(char c) {
         for (int i = 0; i < alphabet.length; i++) {
             if (c == alphabet[i]) {
                 return i;
@@ -128,7 +130,7 @@ abstract public class Cipher {
      * @param i Merkiksi muutettava luku
      * @return c Lukua vastaava merkki
      */
-    public char intToChar(int i) {
+    protected char intToChar(int i) {
         while (i >= 26) {
             i -= 26;
         }
