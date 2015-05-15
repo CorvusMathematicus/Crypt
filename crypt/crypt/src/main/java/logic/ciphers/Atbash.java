@@ -25,9 +25,8 @@ package logic.ciphers;
  */
 public class Atbash extends Cipher {
 
-    private int keyInt;
-
     public Atbash() {
+        keyAvailable = new boolean[]{false, false};
     }
 
     @Override
@@ -47,9 +46,9 @@ public class Atbash extends Cipher {
 
     /**
      * Atbash-salaus ei käytä avainta, tämä metodi ei tee mitään.
-     * 
+     *
      * @param c
-     * @return false    Avainta ei asetettu
+     * @return false Avainta ei asetettu
      */
     @Override
     public boolean setKey(char c[]) {
@@ -57,10 +56,9 @@ public class Atbash extends Cipher {
     }
 
     /**
-     * Palauttaa tyhjän avaimen.
-     * (avainta ei ole)
-     * 
-     * @return 
+     * Palauttaa tyhjän avaimen. (avainta ei ole)
+     *
+     * @return
      */
     @Override
     public char[] getKey() {

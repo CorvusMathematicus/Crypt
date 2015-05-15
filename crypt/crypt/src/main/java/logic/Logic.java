@@ -27,8 +27,9 @@ import ui.GUI;
  */
 public class Logic {
 
-    private boolean encryptMode;    //True=Salataan, False=Puretaan
+    private boolean encryptMode;    //False=Puretaan, True=Salataan
     private boolean keyBeingSet;
+    private boolean keyAvailability[];  //2 boolean-muuttujaa, jotka kertovat onko avainkenttä muokattavissa, ensimmäinen salaukselle ja toinen purkamiselle
     private int activeCipher;
     final private Cipher cipher[];
     final private GUI gui;
@@ -46,30 +47,23 @@ public class Logic {
         this.plaintext = "";
         this.ciphertext = "";
         this.keytext = "";
+        this.keyAvailability = this.cipher[this.activeCipher].getKeyAvailability();
     }
 
     /**
      * Metodilla asetetaan ohjelman tila.
      *
-     * @param mode True=salaustila, False=purkutila
+     * @param mode false=purkutila, true=salaustila
      */
     public void setEncryptMode(boolean mode) {
         encryptMode = mode;
-        /*if (this.activeCipher == 4) {
-            if (this.encryptMode == true) {
-                gui.disableKey();
-            } else {
-                gui.enableKey();
-            }
-        } else if (this.activeCipher != 0) {
-            gui.enableKey();
-        }*/
+        SetKeyButtonState();
     }
 
     /**
-     * Metodi palauttaa onko ohjelma salaus- vai purkutilassa
+     * Metodi palauttaa onko ohjelma salaus- vai purkutilassa.
      *
-     * @return encryptMode
+     * @return encryptMode false=purkutila, true=salaustila
      */
     public boolean getEncryptMode() {
         return encryptMode;
@@ -84,11 +78,8 @@ public class Logic {
     public void setCipher(int cipherNumber) {
         activeCipher = cipherNumber;
         keytext = new String(cipher[activeCipher].getKey());
-        if (cipherNumber == 0 /*|| (cipherNumber == 4 && this.encryptMode == true)*/) {
-            gui.disableKey();
-        } else {
-            gui.enableKey();
-        }
+        keyAvailability = this.cipher[this.activeCipher].getKeyAvailability();
+        SetKeyButtonState();
         gui.writeKey(keytext);
     }
 
@@ -117,8 +108,7 @@ public class Logic {
     }
 
     /**
-     * Metodi asettaa ohjelman tilaan, jossa avainta voidaan vaihtaa
-     *
+     * Metodi asettaa ohjelman tilaan, jossa avainta voidaan vaihtaa.
      */
     public void setKey() {
         keyBeingSet = true;
@@ -149,6 +139,9 @@ public class Logic {
             plaintext += c;
             ciphertext += encrypt(c);
             gui.writeCipher(ciphertext);
+            if (activeCipher == 4) {
+                updateKey();
+            }
         } else {
             plaintext += decrypt(c);
             ciphertext += c;
@@ -159,6 +152,29 @@ public class Logic {
             ciphertext = "";
             gui.writePlain(plaintext);
             gui.writeCipher(ciphertext);
+        }
+    }
+
+    /**
+     * Päivittää avaimen. Valitettavasti salaukset eivät nykyisellään voi kertoa
+     * käyttöliittymälle avaimen muuttuneen, joten tätä kutsutaan, kun merkki on
+     * lisätty ja OTP-salaus on käytössä (ainut tilanne, jossa avain muuttuu).
+     */
+    private void updateKey() {
+        keytext = new String(cipher[activeCipher].getKey());
+        gui.writeKey(keytext);
+    }
+
+    /**
+     * Asettaa salauksen asetuksista riippuen avainkentän muokkausnapin käyttöön
+     * tai pois.
+     */
+    private void SetKeyButtonState() {
+        //Käytetään muuttujaa encryptMode kokonaislukuna, true=1, false=0
+        if (keyAvailability[encryptMode ? 0 : 1]) {
+            gui.enableKey();
+        } else {
+            gui.disableKey();
         }
     }
 }

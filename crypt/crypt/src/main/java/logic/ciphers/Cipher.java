@@ -25,8 +25,9 @@ package logic.ciphers;
  */
 abstract public class Cipher {
 
-    protected char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    static protected char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     protected char[] key;
+    protected boolean keyAvailable[] = {true, true}; //Voiko käyttäjä muuttaa avainkentän sisältöä salatessa ja purkaessa
 
     /**
      * Metodilla tarkistetaan merkin salattavuus. Jos merkki kuuluu
@@ -75,8 +76,8 @@ abstract public class Cipher {
 
     /**
      *
-     * Metodilla puretaan yksi salattu merkki. Metodia ei tule kutsua suoraan, vaan sen
-     * sijaan kutsutaan preDecrypt-metodia.
+     * Metodilla puretaan yksi salattu merkki. Metodia ei tule kutsua suoraan,
+     * vaan sen sijaan kutsutaan preDecrypt-metodia.
      *
      * @param cipher Salattu viesti
      * @return plain Salaamaton viesti
@@ -122,10 +123,9 @@ abstract public class Cipher {
 
     /**
      * Metodi palauttaa lukua vastaavan latinalaisten aakkosten merkin. Huomaa:
-     * Metodi palauttaa aina merkin, sillä metodi käyttää jakojäännöstä. Tämä on
-     * tarkoituksellista, sillä useissa tilanteissa salaus voi tuottaa liian
-     * ison tai liian pienen merkin. Tämä metodi korjaa ongelman
-     * automaattisesti.
+     * Metodi palauttaa aina merkin. Tämä on tarkoituksellista, sillä useissa
+     * tilanteissa salaus voi tuottaa liian ison tai liian pienen lukuarvon
+     * merkille. Tämä metodi korjaa ongelman automaattisesti.
      *
      * @param i Merkiksi muutettava luku
      * @return c Lukua vastaava merkki
@@ -138,5 +138,17 @@ abstract public class Cipher {
             i += 26;
         }
         return alphabet[i];
+    }
+
+    /**
+     * Palauttaa tiedon siitä, milloin käyttäjä voi muuttaa avainta. Eli siis,
+     * milloin avain on käyttäjän asettama ja milloin tietokoneen, tai sitä ei
+     * ole.
+     *
+     * @return keyAvailable Voiko avainta muuttaa salatessa ja purkaessa, tässä
+     * järjestyksessä
+     */
+    public boolean[] getKeyAvailability() {
+        return keyAvailable;
     }
 }

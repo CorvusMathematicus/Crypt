@@ -22,7 +22,7 @@ import logic.Logic;
 
 /**
  *
- * @author korppi
+ * @author Kalle J. Ouwehand
  *
  * Luokka ilmentää näppäimistön kuuntelijaa (KeyListener)
  */

@@ -16,6 +16,9 @@
  */
 package logic.ciphers;
 
+import java.security.SecureRandom;
+import logic.Logic;
+
 /**
  *
  * @author Kalle J. Ouwehand
@@ -25,6 +28,7 @@ package logic.ciphers;
  */
 public class OTP extends Cipher {
 
+    private SecureRandom rnd = new SecureRandom();
     private int[] keyInts;
     private int keyPos;
     final private Caesar caesar;
@@ -32,6 +36,7 @@ public class OTP extends Cipher {
     public OTP(Caesar c) {
         keyInts = new int[]{0};
         key = new char[]{' '};
+        keyAvailable = new boolean[]{false, true};
         caesar = c;
     }
 
@@ -41,11 +46,9 @@ public class OTP extends Cipher {
             keyPos = 0;
             return ' ';
         }
+        prolongKey();
         char result = caesar.caesarShift(plain, keyInts[keyPos]);
         keyPos++;
-        if (keyPos >= keyInts.length) {
-            return ' ';
-        }
         return result;
     }
 
@@ -55,11 +58,11 @@ public class OTP extends Cipher {
             keyPos = 0;
             return ' ';
         }
-        char result = caesar.caesarShift(cipher, -keyInts[keyPos]);
-        keyPos++;
         if (keyPos >= keyInts.length) {
             return ' ';
         }
+        char result = caesar.caesarShift(cipher, -keyInts[keyPos]);
+        keyPos++;
         return result;
     }
 
@@ -84,5 +87,29 @@ public class OTP extends Cipher {
     @Override
     public char[] getKey() {
         return key;
+    }
+
+    //Menetelmä on kallis, mutta riittänee tähän hätään
+    //Näin ei tarvitse muokata cipher-luokkaa, josta tämä periytetään enää enempää.
+    private void prolongKey() {
+        int newKeyInt = rnd.nextInt(alphabet.length);
+        char newKey[];
+        int newKeyInts[];
+        if (keyPos == 0) {
+            newKey = new char[]{intToChar(newKeyInt)};
+            newKeyInts = new int[]{newKeyInt
+            };
+        } else {
+            newKey = new char[key.length + 1];
+            newKeyInts = new int[key.length + 1];
+            for (int i = 0; i < key.length; i++) {
+                newKeyInts[i] = keyInts[i];
+                newKey[i] = key[i];
+            }
+            newKeyInts[key.length] = newKeyInt;
+            newKey[key.length] = intToChar(newKeyInt);
+        }
+        keyInts = newKeyInts;
+        key = newKey;
     }
 }

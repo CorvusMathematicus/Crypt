@@ -29,7 +29,7 @@ import logic.Logic;
 
 /**
  *
- * @author korppi
+ * @author Kalle J. Ouwehand
  *
  * Luokka sisältää graafisen käyttöliittymän.
  */
@@ -40,7 +40,7 @@ public class GUI implements Runnable, ActionListener {
     private JTextField plaintext;
     private JTextField ciphertext;
     private JTextField keytext;
-    private JButton setKeyButton = new JButton("Set key");
+    final private JButton setKeyButton = new JButton("Set key");
     final private KeyListener kl;
     final private Logic logic;
     private static Font font;
@@ -95,6 +95,8 @@ public class GUI implements Runnable, ActionListener {
             logic.setCipher(2);
         } else if (action.equals("autokey")) {
             logic.setCipher(3);
+        } else if (action.equals("OTP")) {
+            logic.setCipher(4);
         } else if (action.equals("setKey")) {
             logic.setKey();
             plaintext.setEnabled(false);
@@ -147,20 +149,20 @@ public class GUI implements Runnable, ActionListener {
     public void writeKey(String s) {
         keytext.setText(s);
     }
-    
+
     /**
-     * Metodi sallii avaimen asettamisen.
-     * Tätä kutsutaan, kun salaus ei ole atbash.
+     * Metodi sallii avaimen asettamisen. Tätä kutsutaan, kun salaus tarvitsee
+     * avaimen.
      */
-    public void enableKey(){
+    public void enableKey() {
         setKeyButton.setEnabled(true);
     }
-    
+
     /**
-     * Metodi estää avaimen asettamisen.
-     * Tätä kutsutaan käytettäessä salausta, jossa ei ole avainta (atbash).
+     * Metodi estää avaimen asettamisen. Tätä kutsutaan käytettäessä salausta,
+     * jossa ei ole avainta, tai käyttäjä ei aseta sitä.
      */
-    public void disableKey(){
+    public void disableKey() {
         setKeyButton.setEnabled(false);
     }
 
@@ -202,16 +204,16 @@ public class GUI implements Runnable, ActionListener {
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel plain = new JLabel("Plaintext:");
-        panel.add(plain);
+        JLabel plainHeadline = new JLabel("Plaintext:");
+        panel.add(plainHeadline);
         plaintext = new JFormattedTextField();
         plaintext.addKeyListener(kl);
         plaintext.setFont(font);
         plaintext.setEnabled(true);
         logic.setEncryptMode(true);
         panel.add(plaintext);
-        JLabel cipher = new JLabel("Ciphertext:");
-        panel.add(cipher);
+        JLabel cipherHeadline = new JLabel("Ciphertext:");
+        panel.add(cipherHeadline);
         ciphertext = new JFormattedTextField();
         ciphertext.addKeyListener(kl);
         ciphertext.setFont(font);
@@ -255,8 +257,6 @@ public class GUI implements Runnable, ActionListener {
         panel.add(headline);
         panel.add(encryptButton);
         panel.add(decryptButton);
-        //encryptButton.addActionListener(this);
-        //decryptButton.addActionListener(this);
     }
 
     private void initCipherMode(JPanel panel) {

@@ -29,7 +29,7 @@ public class Caesar extends Cipher {
 
     public Caesar() {
         keyInt = 0;
-        key = new char[]{'0'};
+        key = new char[]{' '};
     }
 
     @Override
