@@ -30,8 +30,8 @@ public class Autokey extends Cipher {
     final private Caesar caesar;
 
     public Autokey(Caesar c) {
-        keyInts = new int[]{0};
-        key = new char[]{' '};
+        keyInts = new int[]{11, 5, 25};
+        key = "key".toCharArray();
         caesar = c;
     }
 

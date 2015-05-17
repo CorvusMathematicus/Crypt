@@ -92,9 +92,9 @@ public class AutokeyTest {
 
     @Test
     public void testKeyResetOnNewline() {
-        char c = a.encrypt('a');
+        a.encrypt('b');
         a.encrypt('\n');
-        c = a.encrypt('a');
+        char c = a.encrypt('a');
         assertEquals(c, 'b');
     }
 }

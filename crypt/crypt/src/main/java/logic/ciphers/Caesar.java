@@ -28,8 +28,8 @@ public class Caesar extends Cipher {
     private int keyInt;
 
     public Caesar() {
-        keyInt = 0;
-        key = new char[]{' '};
+        keyInt = 3;
+        key = new char[]{'3'};
     }
 
     @Override

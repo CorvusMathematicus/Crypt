@@ -6,4 +6,8 @@ Tarkoituksena on jatkaa aiemmin kurssilla "Aineopintojen harjoitustyö: Ohjelmoi
 Tavoitteena on toteuttaa ainakin seuraavat salaukseti (jos aikaa jää yli, niin toteutetaan lisääkin):
 	Atbash
 	Autokey
-	OTP (avain on tarkoitus luoda salattavaa viestiä kirjoitettaessa, käytetään alkuun javan SecureRandom -luokkaa, joka voidaan mahdollisuuksien mukaan pyrkiä korvaamaan omalla rakenteella)
+	OTP (avain on tarkoitus luoda salattavaa viestiä kirjoitettaessa, käytetään alkuun javan SecureRandom -luokkaa)
+
+Aika- ja tilavaativuuksia ei juuri suunniteltu, sillä ohjelman on tarkoitus toimia vain pienillä syötteillä. Riitti, ettei ohjelman toimintaan kuluvaa aikaa voisi havaita.
+
+Tavoitteeseen on päästy, SecureRandom -luokkaa ei tosin korvattu omalla ratkaisulla.

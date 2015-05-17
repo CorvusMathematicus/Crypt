@@ -17,7 +17,6 @@
 package logic.ciphers;
 
 import java.security.SecureRandom;
-import logic.Logic;
 
 /**
  *
@@ -35,7 +34,7 @@ public class OTP extends Cipher {
 
     public OTP(Caesar c) {
         keyInts = new int[]{0};
-        key = new char[]{' '};
+        key = " ".toCharArray();
         keyAvailable = new boolean[]{false, true};
         caesar = c;
     }
@@ -57,8 +56,7 @@ public class OTP extends Cipher {
         if (cipher == '\n') {
             keyPos = 0;
             return ' ';
-        }
-        if (keyPos >= keyInts.length) {
+        } else if (keyPos >= keyInts.length || key[0]==' ') {
             return ' ';
         }
         char result = caesar.caesarShift(cipher, -keyInts[keyPos]);
@@ -96,9 +94,8 @@ public class OTP extends Cipher {
         char newKey[];
         int newKeyInts[];
         if (keyPos == 0) {
-            newKey = new char[]{intToChar(newKeyInt)};
-            newKeyInts = new int[]{newKeyInt
-            };
+            newKey = new char[]{intToChar(newKeyInt - 1)};  //Jolloin a=1 lukijalle
+            newKeyInts = new int[]{newKeyInt};
         } else {
             newKey = new char[key.length + 1];
             newKeyInts = new int[key.length + 1];
@@ -106,8 +103,8 @@ public class OTP extends Cipher {
                 newKeyInts[i] = keyInts[i];
                 newKey[i] = key[i];
             }
+            newKey[key.length] = intToChar(newKeyInt - 1);    //Jolloin a=1 lukijalle
             newKeyInts[key.length] = newKeyInt;
-            newKey[key.length] = intToChar(newKeyInt);
         }
         keyInts = newKeyInts;
         key = newKey;

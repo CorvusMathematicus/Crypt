@@ -106,7 +106,9 @@ abstract public class Cipher {
      *
      * Metodi muuttaa merkin luvuksi salausalgoritmeja varten. Luku on merkin
      * järjestysluku siten, että a=0. Huomaa: Jos merkki ei ole latinalaisten
-     * aakkosten kirjain, palautetaan -1.
+     * aakkosten kirjain, palautetaan -1. Huomaa: Algoritmit sisältävät
+     * tarvittavat muutokset, jotta tulokset täsmäävät useimpien lähteiden
+     * kanssa missä a=1.
      *
      * @param c Merkki
      * @return i Merkkiä vastaava luku, -1 jos merkki ei ole latinalaisten

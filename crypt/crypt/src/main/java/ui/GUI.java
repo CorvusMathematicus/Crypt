@@ -228,7 +228,7 @@ public class GUI implements Runnable, ActionListener {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel headLine = new JLabel("Key:");
         panel.add(headLine);
-        keytext = new JTextField();
+        keytext = new JTextField("3");
         keytext.setEnabled(false);
         keytext.setFont(font);
         keytext.addKeyListener(kl);

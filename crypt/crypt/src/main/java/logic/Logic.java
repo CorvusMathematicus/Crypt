@@ -46,7 +46,7 @@ public class Logic {
         this.cipher = new Cipher[]{new Atbash(), c, new Vignere(c), new Autokey(c), new OTP(c)};
         this.plaintext = "";
         this.ciphertext = "";
-        this.keytext = "";
+        this.keytext = new String(this.cipher[this.activeCipher].getKey());
         this.keyAvailability = this.cipher[this.activeCipher].getKeyAvailability();
     }
 

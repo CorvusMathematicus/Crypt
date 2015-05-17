@@ -2,12 +2,11 @@ Salaukset:
 Huomaa:
 Avaimena käyttettävä kirjain on muutettavissa luvuksi ja luku kirjaimeksi (jos se ei ylitä aakkosten pituutta).
 Nämä salaukset eivät yleensä sovellu tiedon salaamiseen vakavassa mielessä.
-Ohjelma sisältää Caesar- ja Vignere-salaukset.
+Ohjelma sisältä.
 
 Kirjaimia vastaavat numerot:
 A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
-
 
 Caesar:
 Caesar-salauksessa teksti salataan korvaamalla jokainen aakkosten kirjain kirjaimella, joka on avainluvun verran edempänä aakkosissa, aloittaen alusta aakkosten loppuessa.
@@ -60,6 +59,7 @@ Salattu teksti:		TWMJHUWWJHFGTCW
 
 
 Playfair:
+Huomaa: Playfair-salausta ei ole toteutettu ohjelmalle. Tieto sen toiminnasta on kuitenkin lisätty asiasta kiinnostuneiden luettavaksi.
 Playfair-salauksessa salataan kirjainpareja. Jos viestin pituus on pariton, lisätään loppuun Q. Jos kirjainpari koostuisi kahdesta samasta merkistä, lisätään niiden väliin Q.
 
 Playfair-salauksen avain on 5x5-ruudun taulukko, joka sisältää aakkoset.
@@ -92,10 +92,12 @@ Salaus puretaan vähentämällä kutakin merkkiä vastaavasta luvusta avaimen va
 Salaus on oikein toteutettuna erittäin vahva ja periaatteessa mahdoton murtaa, sillä oikeaa tulosta ei voi erottaa väärästä tuntematta viestin sisältöä etukäteen.
 Salausta on kuitenkin hankala hyödyntää käytännössä, sillä avaimet ovat pitkiä (vähintään yhtä pitkä kuin viesti), niiden on oltava aidosti satunnaisia, eikä niitä voi käyttää kuin kerran vaarantamatta salausta.
 
-OTP-salauksen avain on lukujono, jonka pituus on vähintään yhtä suuri kuin käytettävän merkistön.
+Perinteisesti OTP-salauksen avain on lukujono, jonka pituus on vähintää yhtä suuri kuin salattavan viestin.
+Huomaa: Ohjelma käyttää OTP-salauksen avaimena lukujen paikalla merkkejä.
 
 Esimerkki:
-Avain:					23 12 9  7  26 2  14 15 21 1  9  15 4  26 2
+Avain perinteisessä muodossa:		23 12 9  7  26 2  14 15 21 1  9  15 4  26 2
+Avain ohjelman käyttämässä muodossa:	W  L  I  G  Z  B  N  O  U  A  I  O  D  Z  B
 Salaamaton teksti:			S  A  L  A  T  T  A  V  A  T  E  K  S  T  I
 Salaamatonta tekstiä vastaavat luvut:	19 1  12 1  20 20 1  22 1  20 5  11 19 20 9
 Salattua tekstiä vastaavat luvut:	42 13 21 8  46 22 15 37 22 21 14 26 23 46 11
